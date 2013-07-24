@@ -128,12 +128,12 @@ class Base_Dispatcher
     {
         if ($user) {
             $request->setModuleName('Index');
-            $request->setControllerName('Welcome');
+            $request->setControllerName('Index');
             $request->setActionName('indexAction');
             return;
         }
         $request->setModuleName('Index');
-        $request->setControllerName('Index');
+        $request->setControllerName('Welcome');
         $request->setActionName('indexAction');
     }
 }

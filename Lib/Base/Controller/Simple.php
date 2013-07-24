@@ -99,13 +99,7 @@ class Base_Controller_Simple
     public $ajaxDataToUtf = true;
     public $ajaxErrorDataToUtf = true;
     public $ajaxExtDataToUtf = true;
-    public $isPetPage = false;
-    public $isGamesPage = false;
-    public $appPage = false;
-    public $isNewMainPage = false;
-    public $isDarkFooter = false;
     public $isProfilePage = false;
-    public $disablePageCounter = false;
     public $serviceAppId = false; // сюда контроллер сервиса будет писать свой аппайди, дабы в футере можно было повесить ссылку на попап с настройками
 
     public $templatesPath = null;

@@ -11,7 +11,7 @@ class Base_Service_Common
 
     const GROUP_MCKEY = 'script_server_group';
 
-    const SCRIPT_SERVERS_NEW_SCHEMA = 0; // 1 - новая схема получения конфига через олимп
+    const SCRIPT_SERVERS_NEW_SCHEMA = 0; 
     const MEMCACHE_SCRIPT_SERVERS_KEY = 'common_scriptservers';
     const LEMON_SCRIPT_SERVERS_PREFIX = 'common_scriptservers';
     const LEMON_SCRIPT_SERVERS_KEY    = 1;
@@ -19,16 +19,12 @@ class Base_Service_Common
     private static $isOurIp = null;
     private static $needProjectSync;
 
-    /**
-     * Проверяет, наш ли, доверенный ли человек сейчас на сайте.
-     */
     public static function isOurPerson()
     {
         if (self::$isOurIp !== null) {
             return self::$isOurIp;
         }
 
-        // отключение isOurIp по куке
         if (isset($_COOKIE['disableIsOurIp']) && $_COOKIE['disableIsOurIp'] == 1) {
             self::$isOurIp = false;
             return false;
@@ -52,7 +48,7 @@ class Base_Service_Common
 
         $isOurIp = ($isRealOurIp || (in_array($uid, $ourIds))) ? true : false;
 
-        // Кешируем значение только поле того, как определен текущий юзер, иначе все сломается
+        // ГЉГҐГёГЁГ°ГіГҐГ¬ Г§Г­Г Г·ГҐГ­ГЁГҐ ГІГ®Г«ГјГЄГ® ГЇГ®Г«ГҐ ГІГ®ГЈГ®, ГЄГ ГЄ Г®ГЇГ°ГҐГ¤ГҐГ«ГҐГ­ ГІГҐГЄГіГ№ГЁГ© ГѕГ§ГҐГ°, ГЁГ­Г Г·ГҐ ГўГ±ГҐ Г±Г«Г®Г¬Г ГҐГІГ±Гї
         if ($isUserKnown) {
             self::$isOurIp = $isOurIp;
         }
@@ -68,12 +64,12 @@ class Base_Service_Common
     }
 
     /**
-     * Суть функции никак не соотносится с ее названием. На самом деле, она включает разные опции,
-     * включенные только для тестового режима.
+     * Г‘ГіГІГј ГґГіГ­ГЄГ¶ГЁГЁ Г­ГЁГЄГ ГЄ Г­ГҐ Г±Г®Г®ГІГ­Г®Г±ГЁГІГ±Гї Г± ГҐГҐ Г­Г Г§ГўГ Г­ГЁГҐГ¬. ГЌГ  Г±Г Г¬Г®Г¬ Г¤ГҐГ«ГҐ, Г®Г­Г  ГўГЄГ«ГѕГ·Г ГҐГІ Г°Г Г§Г­Г»ГҐ Г®ГЇГ¶ГЁГЁ,
+     * ГўГЄГ«ГѕГ·ГҐГ­Г­Г»ГҐ ГІГ®Г«ГјГЄГ® Г¤Г«Гї ГІГҐГ±ГІГ®ГўГ®ГЈГ® Г°ГҐГ¦ГЁГ¬Г .
      */
     public static function isOurIp()
     {
-        // включение по куке
+        // ГўГЄГ«ГѕГ·ГҐГ­ГЁГҐ ГЇГ® ГЄГіГЄГҐ
         if (!isset($_COOKIE[self::IS_OUR_IP_COOKIE]) || $_COOKIE[self::IS_OUR_IP_COOKIE] != 1) {
             return false;
         }
@@ -92,25 +88,8 @@ class Base_Service_Common
 
         $isOurIp = ((
                     $realIp == '127.0.0.1'
-                    || Utf::strpos($realIp, '10.13.177.') === 0 // Внутренняя сеть в ДЦ
-                    || Utf::strpos($realIp, '188.227.100') === 0 // Внешняя сеть в ДЦ
-
-                    || Utf::strpos($realIp, '185.5.72.') === 0 // Новая внешняя сеть в ДЦ
-                    || Utf::strpos($realIp, '185.5.73.') === 0 // Новая внешняя сеть в ДЦ
-                    || Utf::strpos($realIp, '185.5.74.') === 0 // Новая внешняя сеть в ДЦ
-                    || Utf::strpos($realIp, '185.5.75.') === 0 // Новая внешняя сеть в ДЦ
-
-                    //|| Utf::strpos($realIp, '91.210.7') === 0 // Старый ДЦ
-                    //|| Utf::strpos($realIp, '37.77.133.') === 0 // Новый офис (старые адреса: 37.77.133.97-37.77.133.126)
-                    || Utf::strpos($realIp, '193.105.179.') === 0 // Новый офис
-                    || $realIp == '46.231.211.230' // Старый офис
-//                    || $realIp == '95.161.12.58' // Леха-админ
-                    || $realIp == '77.108.96.139' // Леха-админ
-//                    || $realIp == '178.162.14.62' // Павел-Семёнов
-//                    || $realIp == '94.19.219.159' // Павел-Семёнов
+                    || strpos($realIp, '192.168.1.33') === 0 
                     || !PRODUCTION) ? true : false);
-
-        // 188.143.140.154 Дима Смирнов
 
         if ($realIp == '10.13.177.109') {
             $isOurIp = false;
@@ -169,7 +148,7 @@ class Base_Service_Common
     }
 
     /**
-     * Возвращает хеш, зависящий от IP адреса
+     * Г‚Г®Г§ГўГ°Г Г№Г ГҐГІ ГµГҐГё, Г§Г ГўГЁГ±ГїГ№ГЁГ© Г®ГІ IP Г Г¤Г°ГҐГ±Г 
      */
     public static function getIpHash($ip)
     {
@@ -179,15 +158,15 @@ class Base_Service_Common
 
 
     /**
-     * Возвращает список скриптовых серверов
+     * Г‚Г®Г§ГўГ°Г Г№Г ГҐГІ Г±ГЇГЁГ±Г®ГЄ Г±ГЄГ°ГЁГЇГІГ®ГўГ»Гµ Г±ГҐГ°ГўГҐГ°Г®Гў
      *
      * @return array
      */
     public static function getScriptServers($upOnly = false,
         $skipMemcache = false,
-        $includeTestLangServer = false, /* временый костыль для тестов */
+        $includeTestLangServer = false, /* ГўГ°ГҐГ¬ГҐГ­Г»Г© ГЄГ®Г±ГІГ»Г«Гј Г¤Г«Гї ГІГҐГ±ГІГ®Гў */
         $includeControlServer = false,
-        $includeVirtualStages = false /* Включить ли в вывод виртуальные стейджи? Юзается для SQ */)
+        $includeVirtualStages = false /* Г‚ГЄГ«ГѕГ·ГЁГІГј Г«ГЁ Гў ГўГ»ГўГ®Г¤ ГўГЁГ°ГІГіГ Г«ГјГ­Г»ГҐ Г±ГІГҐГ©Г¤Г¦ГЁ? ГћГ§Г ГҐГІГ±Гї Г¤Г«Гї SQ */)
     {
         $cacheKey = self::MEMCACHE_SCRIPT_SERVERS_KEY;
 
@@ -216,7 +195,7 @@ class Base_Service_Common
                 }
 
                 if (self::isControlServer()) {
-                    // ключ в мемкеше ставится только с zz. так как там конфиг актуальный всегда.
+                    // ГЄГ«ГѕГ· Гў Г¬ГҐГ¬ГЄГҐГёГҐ Г±ГІГ ГўГЁГІГ±Гї ГІГ®Г«ГјГЄГ® Г± zz. ГІГ ГЄ ГЄГ ГЄ ГІГ Г¬ ГЄГ®Г­ГґГЁГЈ Г ГЄГІГіГ Г«ГјГ­Г»Г© ГўГ±ГҐГЈГ¤Г .
                     Base_Service_Memcache::setOnAllHost($cacheKey, $servers, 86400 * 7);
                 }
             }
@@ -238,7 +217,7 @@ class Base_Service_Common
         }
 
         /*
-        // отключаем до лучших времен
+        // Г®ГІГЄГ«ГѕГ·Г ГҐГ¬ Г¤Г® Г«ГіГ·ГёГЁГµ ГўГ°ГҐГ¬ГҐГ­
         if (PRODUCTION && $includeTestLangServer) {
             $servers['10.13.177.177'] = array('ip' => '10.13.177.177',
                                             'extIp' => '91.210.7.40',
@@ -256,15 +235,15 @@ class Base_Service_Common
     }
 
     /**
-     * Возвращает список скриптовых серверов
+     * Г‚Г®Г§ГўГ°Г Г№Г ГҐГІ Г±ГЇГЁГ±Г®ГЄ Г±ГЄГ°ГЁГЇГІГ®ГўГ»Гµ Г±ГҐГ°ГўГҐГ°Г®Гў
      *
      * @return array
      */
     public static function getScriptServers2($upOnly = false,
                                             $skipMemcache = false,
-                                            $includeTestLangServer = false, /* временый костыль для тестов */
+                                            $includeTestLangServer = false, /* ГўГ°ГҐГ¬ГҐГ­Г»Г© ГЄГ®Г±ГІГ»Г«Гј Г¤Г«Гї ГІГҐГ±ГІГ®Гў */
                                             $includeControlServer = false,
-                                            $includeVirtualStages = false, /* Включить ли в вывод виртуальные стейджи? Юзается для SQ */
+                                            $includeVirtualStages = false, /* Г‚ГЄГ«ГѕГ·ГЁГІГј Г«ГЁ Гў ГўГ»ГўГ®Г¤ ГўГЁГ°ГІГіГ Г«ГјГ­Г»ГҐ Г±ГІГҐГ©Г¤Г¦ГЁ? ГћГ§Г ГҐГІГ±Гї Г¤Г«Гї SQ */
                                             $forceControlsExclude = false)
     {
         $cacheKey = self::MEMCACHE_SCRIPT_SERVERS_KEY;
@@ -296,7 +275,7 @@ class Base_Service_Common
                 }
 
                 if (self::isControlServer()) {
-                    // ключ в мемкеше ставится только с zz. так как там конфиг актуальный всегда.
+                    // ГЄГ«ГѕГ· Гў Г¬ГҐГ¬ГЄГҐГёГҐ Г±ГІГ ГўГЁГІГ±Гї ГІГ®Г«ГјГЄГ® Г± zz. ГІГ ГЄ ГЄГ ГЄ ГІГ Г¬ ГЄГ®Г­ГґГЁГЈ Г ГЄГІГіГ Г«ГјГ­Г»Г© ГўГ±ГҐГЈГ¤Г .
                     Base_Service_Memcache::setOnAllHost($cacheKey, $servers, 86400 * 7);
                 }
             }
@@ -323,7 +302,7 @@ class Base_Service_Common
         }
 
         /*
-        // отключаем до лучших времен
+        // Г®ГІГЄГ«ГѕГ·Г ГҐГ¬ Г¤Г® Г«ГіГ·ГёГЁГµ ГўГ°ГҐГ¬ГҐГ­
         if (PRODUCTION && $includeTestLangServer) {
             $servers['10.13.177.177'] = array('ip' => '10.13.177.177',
                                             'extIp' => '91.210.7.40',
@@ -341,7 +320,7 @@ class Base_Service_Common
     }
 
     /**
-     * Получение конфига скриптовых серверов из memcache/lemon
+     * ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ ГЄГ®Г­ГґГЁГЈГ  Г±ГЄГ°ГЁГЇГІГ®ГўГ»Гµ Г±ГҐГ°ГўГҐГ°Г®Гў ГЁГ§ memcache/lemon
      *
      * @param bool $ignoreMemcache
      *
@@ -371,8 +350,8 @@ class Base_Service_Common
     }
 
     /**
-     * Проверяет доступность и работоспособность шареных очередей на виртуальных серверах.
-     * В случае фэйла одного из них обновляет статус в файле и мемкэше
+     * ГЏГ°Г®ГўГҐГ°ГїГҐГІ Г¤Г®Г±ГІГіГЇГ­Г®Г±ГІГј ГЁ Г°Г ГЎГ®ГІГ®Г±ГЇГ®Г±Г®ГЎГ­Г®Г±ГІГј ГёГ Г°ГҐГ­Г»Гµ Г®Г·ГҐГ°ГҐГ¤ГҐГ© Г­Г  ГўГЁГ°ГІГіГ Г«ГјГ­Г»Гµ Г±ГҐГ°ГўГҐГ°Г Гµ.
+     * Г‚ Г±Г«ГіГ·Г ГҐ ГґГЅГ©Г«Г  Г®Г¤Г­Г®ГЈГ® ГЁГ§ Г­ГЁГµ Г®ГЎГ­Г®ГўГ«ГїГҐГІ Г±ГІГ ГІГіГ± Гў ГґГ Г©Г«ГҐ ГЁ Г¬ГҐГ¬ГЄГЅГёГҐ
      */
     public static function checkVitualStageServers()
     {
@@ -407,7 +386,7 @@ class Base_Service_Common
                 if ($newStatus !== null) {
                     if (isset($statusChanged[$intIp]) && $statusChanged[$intIp]['status'] != $newStatus) {
                         unset($statusChanged[$intIp]);
-                    } elseif ($i == 0) { // записываем только если статус поменялся при первом запуске
+                    } elseif ($i == 0) { // Г§Г ГЇГЁГ±Г»ГўГ ГҐГ¬ ГІГ®Г«ГјГЄГ® ГҐГ±Г«ГЁ Г±ГІГ ГІГіГ± ГЇГ®Г¬ГҐГ­ГїГ«Г±Гї ГЇГ°ГЁ ГЇГҐГ°ГўГ®Г¬ Г§Г ГЇГіГ±ГЄГҐ
                         $statusChanged[$intIp] = array(
                             'name' => $sName,
                             'status' => $newStatus,
@@ -418,7 +397,7 @@ class Base_Service_Common
                     }
                 }
             }
-            sleep(2); // спим секунду перед следующим запуском
+            sleep(2); // Г±ГЇГЁГ¬ Г±ГҐГЄГіГ­Г¤Гі ГЇГҐГ°ГҐГ¤ Г±Г«ГҐГ¤ГіГѕГ№ГЁГ¬ Г§Г ГЇГіГ±ГЄГ®Г¬
         }
 
         if (!empty($statusChanged)) {
@@ -447,7 +426,7 @@ class Base_Service_Common
     }
 
     /**
-     * Обновляет файлик серверами
+     * ГЋГЎГ­Г®ГўГ«ГїГҐГІ ГґГ Г©Г«ГЁГЄ Г±ГҐГ°ГўГҐГ°Г Г¬ГЁ
      * @param $servers
      * @param $file
      * @return mixed
@@ -478,7 +457,7 @@ class Base_Service_Common
     }
 
     /**
-     * Возвращает список серверов виртуальных стейджей
+     * Г‚Г®Г§ГўГ°Г Г№Г ГҐГІ Г±ГЇГЁГ±Г®ГЄ Г±ГҐГ°ГўГҐГ°Г®Гў ГўГЁГ°ГІГіГ Г«ГјГ­Г»Гµ Г±ГІГҐГ©Г¤Г¦ГҐГ©
      *
      * @return array
      */
@@ -504,7 +483,7 @@ class Base_Service_Common
             }
 
             if (self::isControlServer()) {
-                // ключ в мемкеше ставится только с zz. так как там конфиг актуальный всегда.
+                // ГЄГ«ГѕГ· Гў Г¬ГҐГ¬ГЄГҐГёГҐ Г±ГІГ ГўГЁГІГ±Гї ГІГ®Г«ГјГЄГ® Г± zz. ГІГ ГЄ ГЄГ ГЄ ГІГ Г¬ ГЄГ®Г­ГґГЁГЈ Г ГЄГІГіГ Г«ГјГ­Г»Г© ГўГ±ГҐГЈГ¤Г .
                 Base_Service_Memcache::setOnAllHost($cacheKey, $servers, 86400 * 7);
             }
         }
@@ -531,7 +510,7 @@ class Base_Service_Common
 
     public static function cacheStaticServersConfig($config)
     {
-        // ключ в мемкеше ставится только с zz. так как там конфиг актуальный всегда.
+        // ГЄГ«ГѕГ· Гў Г¬ГҐГ¬ГЄГҐГёГҐ Г±ГІГ ГўГЁГІГ±Гї ГІГ®Г«ГјГЄГ® Г± zz. ГІГ ГЄ ГЄГ ГЄ ГІГ Г¬ ГЄГ®Г­ГґГЁГЈ Г ГЄГІГіГ Г«ГјГ­Г»Г© ГўГ±ГҐГЈГ¤Г .
         if (!self::isControlServer()) {
             return false;
         }
@@ -589,7 +568,7 @@ class Base_Service_Common
     }
 
     /**
-     * Размножает конфиг серверов статики по скриптовым. Работает тольео на zz.
+     * ГђГ Г§Г¬Г­Г®Г¦Г ГҐГІ ГЄГ®Г­ГґГЁГЈ Г±ГҐГ°ГўГҐГ°Г®Гў Г±ГІГ ГІГЁГЄГЁ ГЇГ® Г±ГЄГ°ГЁГЇГІГ®ГўГ»Г¬. ГђГ ГЎГ®ГІГ ГҐГІ ГІГ®Г«ГјГҐГ® Г­Г  zz.
      */
     public static function deployStaticServersConfig()
     {
@@ -648,7 +627,7 @@ class Base_Service_Common
     }
 
     /**
-     * Получаем внешний IP текущего сервера
+     * ГЏГ®Г«ГіГ·Г ГҐГ¬ ГўГ­ГҐГёГ­ГЁГ© IP ГІГҐГЄГіГ№ГҐГЈГ® Г±ГҐГ°ГўГҐГ°Г 
      *
      * @return string
      */
@@ -741,15 +720,15 @@ class Base_Service_Common
 
     public static function getCurrencyTitle($full = false)
     {
-        return !$full ? _('ФМ') : _('ФотоМани');
+        return !$full ? _('Г”ГЊ') : _('Г”Г®ГІГ®ГЊГ Г­ГЁ');
     }
 
 
     /**
-     * Проверяет, пришёл ли клиент на эту страницу с др страницы этого же сайта.
-     * Если реф пустой (юзер тупо вбил линк в браузер)
-     * или домен в рефе не соответствует домену серва - возвращает фолс
-     * проверка по домену 2го уровня
+     * ГЏГ°Г®ГўГҐГ°ГїГҐГІ, ГЇГ°ГЁГёВёГ« Г«ГЁ ГЄГ«ГЁГҐГ­ГІ Г­Г  ГЅГІГі Г±ГІГ°Г Г­ГЁГ¶Гі Г± Г¤Г° Г±ГІГ°Г Г­ГЁГ¶Г» ГЅГІГ®ГЈГ® Г¦ГҐ Г±Г Г©ГІГ .
+     * Г…Г±Г«ГЁ Г°ГҐГґ ГЇГіГ±ГІГ®Г© (ГѕГ§ГҐГ° ГІГіГЇГ® ГўГЎГЁГ« Г«ГЁГ­ГЄ Гў ГЎГ°Г ГіГ§ГҐГ°)
+     * ГЁГ«ГЁ Г¤Г®Г¬ГҐГ­ Гў Г°ГҐГґГҐ Г­ГҐ Г±Г®Г®ГІГўГҐГІГ±ГІГўГіГҐГІ Г¤Г®Г¬ГҐГ­Гі Г±ГҐГ°ГўГ  - ГўГ®Г§ГўГ°Г Г№Г ГҐГІ ГґГ®Г«Г±
+     * ГЇГ°Г®ГўГҐГ°ГЄГ  ГЇГ® Г¤Г®Г¬ГҐГ­Гі 2ГЈГ® ГіГ°Г®ГўГ­Гї
      */
     public static function checkReferer()
     {
@@ -757,7 +736,7 @@ class Base_Service_Common
         if (!$referer) {
             return false;
         }
-        Utf::preg_match('/[^\.\/]+\.[^\.\/]+$/', $_SERVER['HTTP_HOST'], $serverDomain); // извлекаем две последние части имени хоста
+        Utf::preg_match('/[^\.\/]+\.[^\.\/]+$/', $_SERVER['HTTP_HOST'], $serverDomain); // ГЁГ§ГўГ«ГҐГЄГ ГҐГ¬ Г¤ГўГҐ ГЇГ®Г±Г«ГҐГ¤Г­ГЁГҐ Г·Г Г±ГІГЁ ГЁГ¬ГҐГ­ГЁ ГµГ®Г±ГІГ 
         Utf::preg_match('/[^\.\/]+\.[^\.\/]+$/', parse_url($referer, PHP_URL_HOST), $refDomain);
         return $refDomain[0] == $serverDomain[0];
     }
@@ -893,7 +872,7 @@ class Base_Service_Common
 
 
     /**
-     * Получение id баннера, по которому на фотострану перешел юзер
+     * ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ id ГЎГ Г­Г­ГҐГ°Г , ГЇГ® ГЄГ®ГІГ®Г°Г®Г¬Гі Г­Г  ГґГ®ГІГ®Г±ГІГ°Г Г­Гі ГЇГҐГ°ГҐГёГҐГ« ГѕГ§ГҐГ°
      * @return int
      */
     public static function getElephantBannerId()
@@ -902,7 +881,7 @@ class Base_Service_Common
     }
 
     /**
-     * Сохранение id баннера в куку на 1 день
+     * Г‘Г®ГµГ°Г Г­ГҐГ­ГЁГҐ id ГЎГ Г­Г­ГҐГ°Г  Гў ГЄГіГЄГі Г­Г  1 Г¤ГҐГ­Гј
      * @param int $bannerId
      */
     public static function setElephantBannerId($bannerId)

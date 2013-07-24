@@ -58,3 +58,51 @@
 
 
 
+2013-07-24 22:52:20 192.168.1.1 192.168.1.1 url:/ script 'index.phtml' not found in path (./App/Index/Templates/)
+
+#0 /home/ilyich/www/bru-site/Lib/Base/View.php(42): Base_View->_script('index.phtml')
+#1 /home/ilyich/www/bru-site/Lib/Base/Lifecycle.php(143): Base_View->render('index.phtml')
+#2 /home/ilyich/www/bru-site/Lib/Base/Lifecycle.php(75): Base_Lifecycle->renderAjaxResponse()
+#3 /home/ilyich/www/bru-site/Lib/Base/Application.php(152): Base_Lifecycle->process()
+#4 /home/ilyich/www/bru-site/Lib/Base/Application.php(172): Base_Application->process()
+#5 /home/ilyich/www/bru-site/public/index.php(15): Base_Application->run()
+#6 {main}
+
+
+
+2013-07-24 22:53:54 192.168.1.1 192.168.1.1 url:/ script 'index.phtml' not found in path (./App/Index/Templates/)
+
+#0 /home/ilyich/www/bru-site/Lib/Base/View.php(42): Base_View->_script('index.phtml')
+#1 /home/ilyich/www/bru-site/Lib/Base/Lifecycle.php(143): Base_View->render('index.phtml')
+#2 /home/ilyich/www/bru-site/Lib/Base/Lifecycle.php(75): Base_Lifecycle->renderAjaxResponse()
+#3 /home/ilyich/www/bru-site/Lib/Base/Application.php(152): Base_Lifecycle->process()
+#4 /home/ilyich/www/bru-site/Lib/Base/Application.php(172): Base_Application->process()
+#5 /home/ilyich/www/bru-site/public/index.php(15): Base_Application->run()
+#6 {main}
+
+
+
+2013-07-24 22:53:54 192.168.1.1 192.168.1.1 url:/ script 'index.phtml' not found in path (./App/Index/Templates/)
+
+#0 /home/ilyich/www/bru-site/Lib/Base/View.php(42): Base_View->_script('index.phtml')
+#1 /home/ilyich/www/bru-site/Lib/Base/Lifecycle.php(143): Base_View->render('index.phtml')
+#2 /home/ilyich/www/bru-site/Lib/Base/Lifecycle.php(75): Base_Lifecycle->renderAjaxResponse()
+#3 /home/ilyich/www/bru-site/Lib/Base/Application.php(152): Base_Lifecycle->process()
+#4 /home/ilyich/www/bru-site/Lib/Base/Application.php(172): Base_Application->process()
+#5 /home/ilyich/www/bru-site/public/index.php(15): Base_Application->run()
+#6 {main}
+
+
+
+2013-07-24 22:55:35 192.168.1.1 192.168.1.1 url:/ script 'index.phtml' not found in path (./App/Index/Templates/)
+
+#0 /home/ilyich/www/bru-site/Lib/Base/View.php(42): Base_View->_script('index.phtml')
+#1 /home/ilyich/www/bru-site/Lib/Base/Lifecycle.php(143): Base_View->render('index.phtml')
+#2 /home/ilyich/www/bru-site/Lib/Base/Lifecycle.php(75): Base_Lifecycle->renderAjaxResponse()
+#3 /home/ilyich/www/bru-site/Lib/Base/Application.php(152): Base_Lifecycle->process()
+#4 /home/ilyich/www/bru-site/Lib/Base/Application.php(172): Base_Application->process()
+#5 /home/ilyich/www/bru-site/public/index.php(15): Base_Application->run()
+#6 {main}
+
+
+
